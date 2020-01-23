@@ -1,15 +1,18 @@
-﻿namespace OpenVASP.Messaging.Messages
+﻿using OpenVASP.Messaging.Messages.Entities;
+
+namespace OpenVASP.Messaging.Messages
 {
     public class SessionRequestMessage : MessageBase
     {
-        public SessionRequestMessage(Message message, HandShake handshake, VaspInformation vasp)
+        public SessionRequestMessage(Message message, HandShakeRequest handshake, VaspInformation vasp)
         {
+            MessageType = MessageType.SessionRequest;
             Message = message;
             HandShake = handshake;
             VASP = vasp;
         }
 
-        public HandShake HandShake { get; private set; }
+        public HandShakeRequest HandShake { get; private set; }
 
         public Message Message { get; private set; }
 

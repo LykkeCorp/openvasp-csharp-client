@@ -10,6 +10,7 @@ using OpenVASP.Whisper;
 using Xunit;
 using System.Security.Cryptography;
 using Nethereum.Signer;
+using OpenVASP.Messaging.Messages.Entities;
 using OpenVASP.ProtocolMessages.Messages;
 
 namespace OpenVASP.Tests
@@ -46,13 +47,11 @@ namespace OpenVASP.Tests
                 ecdhPubKey = byteArray.ToHex(prefix: false);
             }
 
-
             var message = new Message(
-                MessageType.SessionRequest,
                 Guid.NewGuid().ToByteArray().ToHex(prefix: false),
                 Guid.NewGuid().ToByteArray().ToHex(prefix: false),
                 "1");
-            var handshake = new HandShake(topic, null, ecdhPubKey);
+            var handshake = new HandShakeRequest(topic, ecdhPubKey);
             var postalAddress = new PostalAddress(
                 "TestingStreet",
                 61,
@@ -138,7 +137,7 @@ namespace OpenVASP.Tests
             Assert.Equal(request.Comment, response.Comment);
 
             Assert.Equal(request.Message.SessionId, response.Message.SessionId);
-            Assert.Equal(request.Message.MessageType, response.Message.MessageType);
+            Assert.Equal(request.MessageType, response.MessageType);
             Assert.Equal(request.Message.MessageCode, response.Message.MessageCode);
             Assert.Equal(request.Message.MessageId, response.Message.MessageId);
 
